@@ -16,7 +16,7 @@ ENV PATH       /usr/share/nexus/bin:$PATH
 ENV KARAF_HOME /usr/share/nexus
 ENV KARAF_DATA /var/lib/nexus
 
-EXPOSE 8081
+EXPOSE 5000 8081 
 
 VOLUME ["/usr/share/nexus/data"]
 
