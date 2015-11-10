@@ -4,8 +4,8 @@
 
 ### Base Docker Image
 
-* `latest`: nexus 0.7
-* `0.7`   : nexus 0.7
+* `latest`: nexus 3.0
+* `3.0`   : nexus 3.0
 
 ### Installation
 
