@@ -18,6 +18,6 @@ ENV KARAF_DATA /var/lib/nexus
 
 EXPOSE 5000 8081 
 
-VOLUME ["/usr/share/nexus/data"]
+VOLUME ["/var/lib/nexus"]
 
 CMD ["karaf", "server"]
