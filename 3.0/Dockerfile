@@ -20,4 +20,4 @@ EXPOSE 5000 8081
 
 VOLUME ["/var/lib/nexus"]
 
-CMD ["karaf", "server"]
+CMD ["nexus", "server"]
