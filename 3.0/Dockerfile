@@ -13,11 +13,9 @@ RUN \
 
 ## Environments
 ENV PATH       /usr/share/nexus/bin:$PATH
-ENV KARAF_HOME /usr/share/nexus
-ENV KARAF_DATA /var/lib/nexus
 
 EXPOSE 443 5000 8081 
 
-VOLUME ["/var/lib/nexus"]
+VOLUME ["/usr/share/nexus/data"]
 
 CMD ["nexus", "run"]
