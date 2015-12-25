@@ -1,13 +1,11 @@
 NAME     = baselibrary/nexus
 REPO     = git@github.com:baselibrary/docker-nexus.git
+LOCAL    = 192.168.99.2
 VERSIONS = $(foreach df,$(wildcard */Dockerfile),$(df:%/Dockerfile=%))
 
 all: build
 
 build: $(VERSIONS)
-
-release: $(VERSIONS)
-	docker push ${NAME}
 
 branches:
 	git fetch $(REPO) master
@@ -17,4 +15,4 @@ branches:
 
 .PHONY: all build library $(VERSIONS)
 $(VERSIONS):
-	docker build --rm -t $(NAME):$@ $@
+	docker build --rm -t $(NAME):$@ $@ && docker tag ${NAME}:$@ ${LOCAL}/${NAME}:$@ && docker push ${LOCAL}/${NAME}:$@ && docker rmi ${LOCAL}/${NAME}:$@
