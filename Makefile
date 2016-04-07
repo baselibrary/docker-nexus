@@ -1,6 +1,6 @@
 NAME     = baselibrary/nexus
 REPO     = git@github.com:baselibrary/docker-nexus.git
-LOCAL    = 192.168.99.2
+LOCAL    = 10.29.10.249:5001
 VERSIONS = $(foreach df,$(wildcard */Dockerfile),$(df:%/Dockerfile=%))
 
 all: build
