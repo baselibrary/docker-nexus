@@ -3,7 +3,7 @@ MAINTAINER ShawnMa <qsma@thoughtworks.com>
 
 ## Version
 ENV NEXUS_MAJOR   2.0
-ENV NEXUS_VERSION 2.11.4-01
+ENV NEXUS_VERSION 2.14.2-01
 
 ## Packages
 RUN \
@@ -19,7 +19,7 @@ RUN \
 ENV PATH       /usr/share/nexus/bin:$PATH
 ENV NEXUS_HOME /usr/share/nexus
 
-EXPOSE 8081 
+EXPOSE 8081
 
 VOLUME ["/var/lib/nexus"]
 

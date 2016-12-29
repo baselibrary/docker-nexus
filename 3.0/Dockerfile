@@ -3,7 +3,7 @@ MAINTAINER ShawnMa <qsma@thoughtworks.com>
 
 ## Version
 ENV NEXUS_MAJOR   3.0
-ENV NEXUS_VERSION 3.1.0-04
+ENV NEXUS_VERSION 3.2.0-01
 
 ## Packages
 RUN \
