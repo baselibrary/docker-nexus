@@ -1,27 +1,21 @@
 NAME     = baselibrary/nexus
 REPO     = git@github.com:baselibrary/docker-nexus.git
 REGISTRY = thoughtworks.io
-VERSIONS = $(foreach df,$(wildcard */Dockerfile),$(df:%/Dockerfile=%))
+TAG      = 3.6.1
 
-all: build 
+all: build
 
-build: $(VERSIONS)
-	@for version in $(VERSIONS); do \
-	docker build --rm --tag=$(NAME):$$version $$version; \
-	done
+build:
+	docker build --rm --tag=$(NAME):$(TAG) .;
 
-push: $(VERSIONS)
-	@for version in $(VERSIONS); do \
-	docker tag -f ${NAME}:$$version ${REGISTRY}/${NAME}:$$version; \
-	docker push ${REGISTRY}/${NAME}:$$version; \
-	docker rmi -f ${REGISTRY}/${NAME}:$$version; \
-	done
+push:
+	docker tag -f ${NAME}:$(TAG) ${REGISTRY}/${NAME}:$(TAG); \
+	docker push ${REGISTRY}/${NAME}:$(TAG); \
+	docker rmi -f ${REGISTRY}/${NAME}:$(TAG); \
 
-clean: $(VERSIONS)
-	@for version in $(VERSIONS); do \
-	docker rmi -f ${NAME}:$$version; \
-	docker rmi -f ${REGISTRY}/${NAME}:$$version; \
-	done
+clean:
+	docker rmi -f ${NAME}:$(TAG); \
+	docker rmi -f ${REGISTRY}/${NAME}:$(TAG); \
 
 update:
 	docker run --rm -v $$(pwd):/work -w /work buildpack-deps ./update.sh
