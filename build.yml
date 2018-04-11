@@ -1,0 +1,7 @@
+build:
+  version: 2016-03-14
+  steps:
+    builder:
+      name: baselibrary/baseimage
+      dockerfile: Dockerfile
+      after_build_command: pwd
