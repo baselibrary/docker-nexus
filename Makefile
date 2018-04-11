@@ -1,7 +1,7 @@
 NAME     = baselibrary/nexus
 REPO     = git@github.com:baselibrary/docker-nexus.git
 REGISTRY = thoughtworks.io
-TAG      = 3.6.1
+TAG      = 3.10.0
 
 all: build
 
@@ -16,6 +16,3 @@ push:
 clean:
 	docker rmi -f ${NAME}:$(TAG); \
 	docker rmi -f ${REGISTRY}/${NAME}:$(TAG); \
-
-update:
-	docker run --rm -v $$(pwd):/work -w /work buildpack-deps ./update.sh
