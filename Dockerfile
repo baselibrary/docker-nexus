@@ -13,6 +13,6 @@ RUN \
 COPY nexus-repository-apt-1.0.5.jar ${NEXUS_APT_DIR}
 RUN \
   mkdir -p ${NEXUS_KEYCLOAK_DIR}; \
-  sed '$amvn\\:org.github.flytreeleft/nexus3-keycloak-plugin/0.2.0 = 200' /opt/sonatype/nexus/etc/karaf/startup.properties; 
-COPY nexus-keycloak-plugin-0.2.0.jar ${NEXUS_KEYCLOAK_DIR}
+  sed '$areference\\:file\\:org/github/flytreeleft/nexus3-keycloak-plugin/0.2.0/nexus3-keycloak-plugin-0.2.0.jar = 200' /opt/sonatype/nexus/etc/karaf/startup.properties;
+COPY nexus3-keycloak-plugin-0.2.0.jar ${NEXUS_KEYCLOAK_DIR}
 USER nexus
