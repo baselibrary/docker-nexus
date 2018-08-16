@@ -19,7 +19,7 @@ if [ "$1" == '/opt/sonatype/nexus/bin/nexus' ]; then
   mkdir -p "$NEXUS_DATA"
   chown -R nexus:nexus "$NEXUS_DATA"
 
-  su - nexus -c "$@"
+  su nexus -c "$@"
 fi
 
 exec "$@"
