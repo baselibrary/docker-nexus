@@ -44,4 +44,4 @@ VOLUME [ "${NEXUS_SSL}" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD [ "${NEXUS_HOME}/bin/nexus", "run"]
+CMD [ "/opt/sonatype/nexus/bin/nexus", "run"]

@@ -3,7 +3,7 @@
 set -x
 set -eo pipefail
 
-if [ "$1" == 'bin/nexus' ]; then
+if [ "$1" == '/opt/sonatype/nexus/bin/nexus' ]; then
   if [ ! -f "$NEXUS_SSL/keystore.jks" ]; then
     mkdir -p $NEXUS_SSL
     if [ ! -f $PUBLIC_CERT ] && [ ! -f $PRIVATE_KEY ]; then
