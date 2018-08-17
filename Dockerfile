@@ -33,7 +33,7 @@ RUN chmod a+x /entrypoint.sh
 
 EXPOSE 8443
 
-VOLUME [ "${NEXUS_SSL}" ]
+VOLUME [ "${NEXUS_CERT}" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
