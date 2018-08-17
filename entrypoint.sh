@@ -4,18 +4,14 @@ set -x
 set -eo pipefail
 
 if [ "$1" == '/opt/sonatype/nexus/bin/nexus' ]; then
-  if [ ! -f "$NEXUS_SSL/keystore.jks" ]; then
-    mkdir -p $NEXUS_SSL
-    if [ ! -f $PUBLIC_CERT ] && [ ! -f $PRIVATE_KEY ]; then
-      openssl req -nodes -new -x509 -keyout $PRIVATE_KEY -out $PUBLIC_CERT -subj "${PUBLIC_CERT_SUBJ}"
+  if [ ! -f "$NEXUS_CERT/keystore.jks" ]; then
+    mkdir -p $NEXUS_CERT
+    if [ ! -f $NEXUS_CERT/nexus.key ]; then
+      $JAVA_HOME/bin/keytool -genkeypair -alias nexus -dname "CN=localhost" -keystore $NEXUS_CERT/nexus.key -keypass $NEXUS_CERT_PASSWORD -storepass $NEXUS_CERT_PASSWORD
     fi
-    if [ ! -f $NEXUS_SSL/jetty.key ]; then
-      openssl pkcs12 -export -in $PUBLIC_CERT -inkey $PRIVATE_KEY -out $NEXUS_SSL/jetty.key -passout pass:$PRIVATE_KEY_PASSWORD
-    fi
-    $JAVA_HOME/bin/keytool -importkeystore -noprompt -deststorepass $PRIVATE_KEY_PASSWORD -destkeypass $PRIVATE_KEY_PASSWORD -destkeystore $NEXUS_SSL/keystore.jks -srckeystore $NEXUS_SSL/jetty.key -srcstoretype PKCS12 -srcstorepass $PRIVATE_KEY_PASSWORD
-    sed -r '/<Set name="(KeyStore|KeyManager|TrustStore)Password">/ s:>.*$:>'$PRIVATE_KEY_PASSWORD'</Set>:' -i $NEXUS_HOME/etc/jetty/jetty-https.xml
+    $JAVA_HOME/bin/keytool -importkeystore -noprompt -srckeystore $NEXUS_CERT/nexus.keystore -srcstorepass $NEXUS_CERT_PASSWORD -srcstoretype PKCS12 -destkeystore $NEXUS_CERT/keystore.jks -deststorepass $NEXUS_CERT_PASSWORD -deststoretype PKCS12
+    sed -r '/<Set name="(KeyStore|KeyManager|TrustStore)Password">/ s:>.*$:>'$NEXUS_CERT_PASSWORD'</Set>:' -i $NEXUS_HOME/etc/jetty/jetty-https.xml
   fi
-
   mkdir -p "$NEXUS_DATA"
   chown -R nexus:nexus "$NEXUS_DATA"
 
