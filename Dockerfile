@@ -6,21 +6,23 @@ ENV NEXUS_CERT_PASSWORD=password
 
 ARG NEXUS_VERSION=3.14.0-04
 ARG NEXUS_FEATURES_FILE=/opt/sonatype/nexus/system/org/sonatype/nexus/assemblies/nexus-core-feature/${NEXUS_VERSION}/nexus-core-feature-${NEXUS_VERSION}-features.xml
-ARG NEXUS_APT_VERSION=1.0.7
+ARG NEXUS_APT_VERSION=1.0.8
 ARG NEXUS_APT_TARGET=/opt/sonatype/nexus/system/net/staticsnow/nexus-repository-apt/${NEXUS_APT_VERSION}/
 ARG NEXUS_HELM_VERSION=0.0.1
 ARG NEXUS_HELM_TARGET=/opt/sonatype/nexus/system/org/sonatype/nexus/plugins/nexus-repository-helm/${NEXUS_HELM_VERSION}/
+ARG NEXUS_COMP_VERSION=1.16.1
+ARG NEXUS_XZ_VERSION=1.8
 
 USER root
 RUN \
   mkdir -p ${NEXUS_APT_TARGET}; \
-  sed -i 's@nexus-repository-maven</feature>@nexus-repository-maven</feature>\n        <feature prerequisite="false" dependency="false" version="1.0.7">nexus-repository-apt</feature>@g' ${NEXUS_FEATURES_FILE}; \
-  sed -i 's@<feature name="nexus-repository-maven"@<feature name="nexus-repository-apt" description="net.staticsnow:nexus-repository-apt" version="1.0.7">\n        <details>net.staticsnow:nexus-repository-apt</details>\n        <bundle>mvn:net.staticsnow/nexus-repository-apt/1.0.7</bundle>\n        <bundle>mvn:org.apache.commons/commons-compress/1.16.1</bundle>\n        <bundle>mvn:org.tukaani/xz/1.8</bundle>\n    </feature>\n    <feature name="nexus-repository-maven"@g' ${NEXUS_FEATURES_FILE};
+  sed -i "s@nexus-repository-maven</feature>@nexus-repository-maven</feature>\n        <feature version=\"${NEXUS_APT_VERSION}\" prerequisite=\"false\" dependency=\"false\">nexus-repository-apt</feature>@g" ${NEXUS_FEATURES_FILE};; \
+  sed -i "s@<feature name=\"nexus-repository-maven\"@<feature name=\"nexus-repository-apt\" description=\"net.staticsnow:nexus-repository-apt\" version=\"${NEXUS_APT_VERSION}\">\n        <details>net.staticsnow:nexus-repository-apt</details>\n        <bundle>mvn:net.staticsnow/nexus-repository-apt/${NEXUS_APT_VERSION}</bundle>\n        <bundle>mvn:org.apache.commons/commons-compress/${NEXUS_COMP_VERSION}</bundle>\n        <bundle>mvn:org.tukaani/xz/${NEXUS_XZ_VERSION}</bundle>\n    </feature>\n    <feature name=\"nexus-repository-maven\"@g" ${NEXUS_FEATURES_FILE}
 COPY nexus-repository-apt-${NEXUS_APT_VERSION}.jar ${NEXUS_APT_TARGET}
 RUN \
   mkdir -p ${NEXUS_HELM_TARGET}; \
   sed -i 's@nexus-repository-maven</feature>@nexus-repository-maven</feature>\n        <feature prerequisite="false" dependency="false">nexus-repository-helm</feature>@g' ${NEXUS_FEATURES_FILE}; \
-  sed -i 's@<feature name="nexus-repository-maven"@<feature name="nexus-repository-helm" description="org.sonatype.nexus.plugins:nexus-repository-helm" version="0.0.1">\n        <details>org.sonatype.nexus.plugins:nexus-repository-helm</details>\n        <bundle>mvn:org.sonatype.nexus.plugins/nexus-repository-helm/0.0.1</bundle>\n        <bundle>mvn:org.apache.commons/commons-compress/1.16.1</bundle>\n        <bundle>mvn:org.tukaani/xz/1.8</bundle>\n    </feature>\n    <feature name="nexus-repository-maven"@g' ${NEXUS_FEATURES_FILE};
+  sed -i 's@<feature name=\"nexus-repository-maven\"@<feature name=\"nexus-repository-helm\" description=\"org.sonatype.nexus.plugins:nexus-repository-helm\" version=\"${NEXUS_HELM_VERSION}\">\n        <details>org.sonatype.nexus.plugins:nexus-repository-helm</details>\n        <bundle>mvn:org.sonatype.nexus.plugins/nexus-repository-helm/0.0.1</bundle>\n        <bundle>mvn:org.apache.commons/commons-compress/${NEXUS_COMP_VERSION}</bundle>\n        <bundle>mvn:org.tukaani/xz/${NEXUS_XZ_VERSION}</bundle>\n    </feature>\n    <feature name=\"nexus-repository-maven\"@g' ${NEXUS_FEATURES_FILE};
 COPY nexus-repository-helm-${NEXUS_HELM_VERSION}.jar ${NEXUS_HELM_TARGET}
 
 RUN sed \
