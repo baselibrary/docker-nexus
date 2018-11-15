@@ -6,7 +6,7 @@ ENV NEXUS_CERT_PASSWORD=password
 
 ARG NEXUS_VERSION=3.14.0-04
 ARG NEXUS_FEATURES_FILE=/opt/sonatype/nexus/system/org/sonatype/nexus/assemblies/nexus-core-feature/${NEXUS_VERSION}/nexus-core-feature-${NEXUS_VERSION}-features.xml
-ARG NEXUS_APT_VERSION=1.0.8
+ARG NEXUS_APT_VERSION=1.0.7
 ARG NEXUS_APT_TARGET=/opt/sonatype/nexus/system/net/staticsnow/nexus-repository-apt/${NEXUS_APT_VERSION}/
 ARG NEXUS_HELM_VERSION=0.0.1
 ARG NEXUS_HELM_TARGET=/opt/sonatype/nexus/system/org/sonatype/nexus/plugins/nexus-repository-helm/${NEXUS_HELM_VERSION}/
