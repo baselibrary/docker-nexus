@@ -1,4 +1,4 @@
-FROM sonatype/nexus3:3.13.0
+FROM sonatype/nexus3:3.14.0
 
 ENV NEXUS_CERT=${NEXUS_HOME}/etc/ssl
 ENV NEXUS_CERT_CN=localhost
